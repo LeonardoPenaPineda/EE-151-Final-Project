@@ -1,22 +1,20 @@
 To-Do
 
--
--
--
--
--
+-Flowchart
+-Schematic
+-Report
+-Presentation Outline
+-Build Device
+-Code
 --------------------------------------------------
 Ongoing
--
--
--
--
--
+-Schematic: Kelvin
+-Flowchart: Leo
+-Report: Sam
 --------------------------------------------------
 Finished
 -
 -
 -
-
 -
 -
