@@ -79,20 +79,24 @@ void statusLED() {
   }
 }
 
+//Programs different effects based on inputs collected by IR sensor
 void translateIR() {
   switch(results.value) {
-    
+    //turns on the project
     case 0xFFA25D: on = true; statusLED(); break;
+    //controls the volume of the buzzer by changing frequency of a buzzer
     case 0xFF629D: if (buzzerValue < 1000) {buzzerValue += 200;}; break;
     case 0xFFA857: if (buzzerValue > 0) {buzzerValue -= 200;}; break;
+    //turns off the project
     case 0xFF02FD: on = false; statusLED(); break;
 
+    //all other imputs will clear the LCD display
     default: lcd.setCursor(0, 1); lcd.write("               "); delay(200); lcd.setCursor(0, 1); lcd.write(" ");
 
   }
 
 }
-
+//Outputs the pattern of LEDs to make a happy face visual
 void writeHappy() {
   byte happy[8] = {B00111100, B01000010, B10101001, B10000101, B10000101, B10101001, B01000010, B00111100};
   lc.setRow(0,0,happy[0]);
@@ -105,6 +109,7 @@ void writeHappy() {
   lc.setRow(0,7,happy[7]);
 }
 
+//Outputs the pattern of LEDs to make a sad face visual
 void writeSad() {
   byte sad[8] = {B00111100, B01000010, B10100101, B10001001, B10001001, B10100101, B01000010, B00111100};
   lc.setRow(0,0,sad[0]);
@@ -117,6 +122,7 @@ void writeSad() {
   lc.setRow(0,7,sad[7]);
 }
 
+//uses the ultrasonic sensor to check the distance of objects using sound waves
 void checkDistance() {
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
@@ -139,15 +145,16 @@ void checkDistance() {
 
 
 void loop() {
-  
+  //if the program is on
   while (on == true){
     checkDistance();
     lcd.clear();
+    //if the distance is less than 20 cm, it will activate LEDs and buzzer to alert
     while (distance < 20) {
       analogWrite(GREEN, 0);
       redValue = 255;
       blueValue = 3;
-      //led go up
+      //uses an RGB LED to create a flashing effect
       for (int i = 0; i < 201; i+=3) {
         redValue -=3;
         blueValue +=4;
@@ -156,12 +163,15 @@ void loop() {
         analogWrite(BLUE, blueValue);
         delay(10);
       }
+      //constantly check for any inputs from the remote
       if (irrecv.decode(&results)) {
         translateIR();
         irrecv.resume();
       }
       
+      //turns on buzzer
       analogWrite(buzzer, buzzerValue);
+      //turns on the DC motor that makes the fan work
       digitalWrite(ENABLE, HIGH);
       digitalWrite(DIRA, LOW);
       digitalWrite(DIRB, HIGH);
@@ -170,6 +180,8 @@ void loop() {
       delay(100);
       checkDistance();
     }
+    
+    //if distance of an object is not less than 20 cm away, the buzzer will be turned off and the LED will be green
     analogWrite(buzzer, 0);
     digitalWrite(ENABLE, LOW);
     lc.clearDisplay(0);
@@ -177,12 +189,14 @@ void loop() {
     analogWrite(BLUE, 0);
     analogWrite(RED, 0);
     analogWrite(GREEN, 255);  
+   //will continue to check for any inputs by the remote
   if (irrecv.decode(&results)) {
     translateIR();
     irrecv.resume();
-  }
+    }
   }
 
+  //if project is off, the LCD display will be cleared, the buzzer, ultrasonic sensor, dc motor, and LED will be turned off
   if (on == false) {
     lc.clearDisplay(0);
     analogWrite(buzzer, 0);
@@ -192,6 +206,7 @@ void loop() {
     lcd.setCursor(6, 0);
     lcd.write("OFF!");
     analogWrite(GREEN, 0);
+    //continue to check for inputs
     if (irrecv.decode(&results)) {
       translateIR();
       irrecv.resume();
