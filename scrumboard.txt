@@ -1,17 +1,12 @@
 To-Do
--Presentation Outline
--Build Device
--Code
+
 --------------------------------------------------
 Ongoing
--Schematic: Kelvin
--Flowchart: Leo
--Report: Sam
--Name the project
+
 --------------------------------------------------
 Finished
--
--
--
--
--
+- Schematic
+- Flowchart
+- Lab Report
+- Code Development
+- Hardware Construction
