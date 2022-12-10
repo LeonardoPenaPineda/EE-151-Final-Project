@@ -1,0 +1,23 @@
+MATERIAL LIST
+
+830 Tie-Points Breadboard (2)
+MEGA 2560 Controller Board
+USB Cable
+LCD102 Module
+Power Supply Module
+L293D
+MAX7219 Module
+9V1A Adapter
+Google
+Coffee
+Power of Friendship (if applicable)
+Potentiometer 10k
+Passive Buzzer
+Ultrasonic Sensor
+Fan Blade and 3-6V Motor
+IR Receiver Module
+Remote Control
+RGB LED (3)
+10k Resistor
+Female-to-Male Dupont Wire
+Breadboard Jumper Wire
